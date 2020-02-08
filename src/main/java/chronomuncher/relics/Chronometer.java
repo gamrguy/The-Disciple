@@ -4,6 +4,7 @@ import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
+import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.powers.AbstractPower.PowerType;
@@ -14,6 +15,8 @@ import com.megacrit.cardcrawl.vfx.combat.PowerBuffEffect;
 import com.badlogic.gdx.graphics.Texture;
 import basemod.abstracts.CustomRelic;
 import chronomuncher.ChronoMod;
+import chronomuncher.patches.RestoreRetainedCardsEnergyUse;
+import chronomuncher.patches.RetainedForField;
 
 public class Chronometer extends CustomRelic {
     public static final String ID = "Chronometer";
@@ -27,19 +30,6 @@ public class Chronometer extends CustomRelic {
     @Override
     public String getUpdatedDescription() {
         return this.DESCRIPTIONS[0];
-    }
-    
-    // Called from onPowersModified Subscriber
-    public void removeConfusion() {
-        p = AbstractDungeon.player;
-        if (p.hasPower("Confusion")) {
-            p.powers.remove(p.getPower("Confusion"));
-            AbstractDungeon.effectList.add(new PowerBuffEffect(p.hb.cX - p.animX, p.hb.cY + p.hb.height / 2.0F - 48.0F, "Immune"));
-        }
-        if (p.hasPower("TPH_Confusion")) {
-            p.powers.remove(p.getPower("TPH_Confusion"));
-            AbstractDungeon.effectList.add(new PowerBuffEffect(p.hb.cX - p.animX, p.hb.cY + p.hb.height / 2.0F - 48.0F, "Immune"));
-        }
     }
 
     @Override

@@ -27,19 +27,6 @@ public class Chronograph extends CustomRelic {
     public String getUpdatedDescription() {
         return this.DESCRIPTIONS[0];
     }
-    
-    // Called from onPowersModified Subscriber
-    public void removeConfusion() {
-        p = AbstractDungeon.player;
-        if (p.hasPower("Confusion")) {
-            p.powers.remove(p.getPower("Confusion"));
-            AbstractDungeon.effectList.add(new PowerBuffEffect(p.hb.cX - p.animX, p.hb.cY + p.hb.height / 2.0F - 48.0F, "Immune"));
-        }
-        if (p.hasPower("TPH_Confusion")) {
-            p.powers.remove(p.getPower("TPH_Confusion"));
-            AbstractDungeon.effectList.add(new PowerBuffEffect(p.hb.cX - p.animX, p.hb.cY + p.hb.height / 2.0F - 48.0F, "Immune"));
-        }
-    }
 
     @Override
     public void obtain() {
