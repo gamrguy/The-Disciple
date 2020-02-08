@@ -29,3 +29,9 @@ PSDs/
 hs_err_pid*
 *.psd
 *.ai
+
+/target/
+/.settings/
+/bin/
+*.classpath
+*.project
