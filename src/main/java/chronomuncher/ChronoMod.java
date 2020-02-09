@@ -58,7 +58,6 @@ import chronomuncher.potions.*;
 import chronomuncher.events.*;
 import chronomuncher.patches.Enum;
 import chronomuncher.patches.EnumLib;
-import chronomuncher.patches.customMetrics;
 import chronomuncher.characters.Chronomuncher;
 import chronomuncher.orbs.ReplicaOrb;
 
@@ -86,9 +85,6 @@ public class ChronoMod implements
     public static Gson gson;
     private static Map<String, Keyword> keywords;
 
-    public static ArrayList<String> card_uses = new ArrayList();
-    public static ArrayList<String> card_discards = new ArrayList();
-
     @SuppressWarnings("deprecation")
     public ChronoMod() {
         BaseMod.subscribe(this);
@@ -98,19 +94,7 @@ public class ChronoMod implements
         logger.info(s);
     }
 
-    public static void addCardUsage(String cardName) {
-        card_uses.add(cardName);
-    }
-
-    public static void addCardDiscard(String cardName) {
-        card_discards.add(cardName);
-    }
-
-    public void receivePreStartGame() {
-        card_uses.clear();
-        card_discards.clear();
-        // setGameSwitchCards();
-    }
+    public void receivePreStartGame() {}
 
     public static void initialize() {
         logger.info("========================= CHRONOMUNCHER IS A GO =========================");
@@ -254,13 +238,7 @@ public class ChronoMod implements
         map.put("CHRONO-CUCKOO", new Sfx("chrono_audio/Cuckoo.ogg", false));
     }
         
-    public void receivePostDeath() {
-        customMetrics metrics = new customMetrics();
-        
-        Thread t = new Thread(metrics);
-        t.setName("Metrics");
-        t.start();
-    }
+    public void receivePostDeath() {}
 
     @Override
     public void receiveEditCharacters() {
@@ -534,7 +512,7 @@ public class ChronoMod implements
         String keywordStrings = Gdx.files.internal("localization/" + language + "/chronoKeywords.json").readString(String.valueOf(StandardCharsets.UTF_8));
         Type typeToken = new TypeToken<Map<String, Keyword>>() {}.getType();
 
-        keywords = (Map)gson.fromJson(keywordStrings, typeToken);
+        keywords = gson.fromJson(keywordStrings, typeToken);
 
         keywords.forEach((k,v)->{
                 // Keyword word = (Keyword)v;
@@ -598,14 +576,12 @@ public class ChronoMod implements
 
     public void receiveCardUsed(AbstractCard c)
     { 
-        addCardUsage(c.name);
-
         for (AbstractOrb o : AbstractDungeon.player.orbs) {
             if (o instanceof ReplicaOrb) {
                 ReplicaOrb u = (ReplicaOrb)o;
                 u.onCardUse(c);
             }
-        }    
+        }
     }
 
     public void receivePostDraw(AbstractCard c) {

@@ -19,9 +19,4 @@ public abstract class MetricsCard extends CustomCard {
 	        this.rawDescription = "";
 	    }
 	}
-
-	@Override
-	public void onMoveToDiscard() {
-    	ChronoMod.addCardDiscard(this.name);
-	}
 }
