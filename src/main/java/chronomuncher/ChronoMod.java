@@ -68,7 +68,7 @@ import org.apache.logging.log4j.Logger;
 public class ChronoMod implements 
         PostInitializeSubscriber, EditCardsSubscriber, EditCharactersSubscriber, EditKeywordsSubscriber, PreStartGameSubscriber,
         EditStringsSubscriber, SetUnlocksSubscriber, EditRelicsSubscriber, OnCardUseSubscriber, PostDeathSubscriber, PostDrawSubscriber,
-        OnPowersModifiedSubscriber, PreMonsterTurnSubscriber {
+        OnPowersModifiedSubscriber, PreMonsterTurnSubscriber, AddAudioSubscriber {
 
     public static final Logger logger = LogManager.getLogger(ChronoMod.class.getName());
 
@@ -148,7 +148,7 @@ public class ChronoMod implements
     }
 
     public void outputSQLListsForMetrics() {
-        ArrayList<AbstractCard> cards = new ArrayList();
+        ArrayList<AbstractCard> cards = new ArrayList<AbstractCard>();
         cards.addAll(CardLibrary.getCardList(EnumLib.CHRONO_GOLD));
         cards.addAll(CardLibrary.getCardList(CardLibrary.LibraryType.COLORLESS));
         cards.addAll(CardLibrary.getCardList(CardLibrary.LibraryType.CURSE));
@@ -220,22 +220,23 @@ public class ChronoMod implements
         return converted.toString();
     }
 
-    public void loadAudio() {
-        HashMap<String, Sfx> map = (HashMap<String, Sfx>)ReflectionHacks.getPrivate(CardCrawlGame.sound, SoundMaster.class, "map");
-        map.put("CHRONO-COGS", new Sfx("chrono_audio/Cogs.ogg", false));
-        map.put("CHRONO-SHARP1", new Sfx("chrono_audio/Slide_Sharp_01.ogg", false));
-        map.put("CHRONO-SHARP2", new Sfx("chrono_audio/Slide_Sharp_02.ogg", false));
-        map.put("CHRONO-SLOWDOWN", new Sfx("chrono_audio/SlowDown.ogg", false));
-        map.put("CHRONO-SPEEDUP", new Sfx("chrono_audio/SpeedUp.ogg", false));
-        map.put("CHRONO-LOWWHOOSH", new Sfx("chrono_audio/LowWhoosh.ogg", false));
-        map.put("CHRONO-TICKINGCLEAN", new Sfx("chrono_audio/TickingClean.ogg", false));
-        map.put("CHRONO-TICKINGDIRTY", new Sfx("chrono_audio/TickingDirty.ogg", false));
-        map.put("CHRONO-TICK", new Sfx("chrono_audio/Tick.ogg", false));
-        map.put("CHRONO-CHIME", new Sfx("chrono_audio/Chime.ogg", false));
-        map.put("CHRONO-WINDUP", new Sfx("chrono_audio/WindUp.ogg", false));
-        map.put("CHRONO-SHORTSLEEP", new Sfx("chrono_audio/ShortSleep.ogg", false));
-        map.put("CHRONO-ELASTIC", new Sfx("chrono_audio/Elastic.ogg", false));
-        map.put("CHRONO-CUCKOO", new Sfx("chrono_audio/Cuckoo.ogg", false));
+    @Override
+    public void receiveAddAudio() {
+    	BaseMod.addAudio("CHRONO-COGS", "chrono_audio/Cogs.ogg");
+        BaseMod.addAudio("CHRONO-COGS", "chrono_audio/Cogs.ogg");
+        BaseMod.addAudio("CHRONO-SHARP1", "chrono_audio/Slide_Sharp_01.ogg");
+        BaseMod.addAudio("CHRONO-SHARP2", "chrono_audio/Slide_Sharp_02.ogg");
+        BaseMod.addAudio("CHRONO-SLOWDOWN", "chrono_audio/SlowDown.ogg");
+        BaseMod.addAudio("CHRONO-SPEEDUP", "chrono_audio/SpeedUp.ogg");
+        BaseMod.addAudio("CHRONO-LOWWHOOSH", "chrono_audio/LowWhoosh.ogg");
+        BaseMod.addAudio("CHRONO-TICKINGCLEAN", "chrono_audio/TickingClean.ogg");
+        BaseMod.addAudio("CHRONO-TICKINGDIRTY", "chrono_audio/TickingDirty.ogg");
+        BaseMod.addAudio("CHRONO-TICK", "chrono_audio/Tick.ogg");
+        BaseMod.addAudio("CHRONO-CHIME", "chrono_audio/Chime.ogg");
+        BaseMod.addAudio("CHRONO-WINDUP", "chrono_audio/WindUp.ogg");
+        BaseMod.addAudio("CHRONO-SHORTSLEEP", "chrono_audio/ShortSleep.ogg");
+        BaseMod.addAudio("CHRONO-ELASTIC", "chrono_audio/Elastic.ogg");
+        BaseMod.addAudio("CHRONO-CUCKOO", "chrono_audio/Cuckoo.ogg");
     }
         
     public void receivePostDeath() {}
